@@ -25,7 +25,7 @@ defineProps({
                 leave-to-class="opacity-0 scale-80"
                 mode="out-in"
             >
-                <div v-if="isBeingCopied">Short url copied!</div>
+                <div v-if="isBeingCopied" class="w-max">Short url copied!</div>
                 <svg v-else>
                     <use href="assets/svg/copy.svg#copy"></use>
                 </svg>
