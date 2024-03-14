@@ -80,61 +80,59 @@ function updateShortLinksHistory() {
 </script>
 
 <template>
-    <div class="bg-gray-50 text-black/50 dark:bg-black dark:text-white">
-        <div
-            class="relative min-h-screen flex flex-col items-center justify-center"
-        >
-            <div class="relative w-full max-w-3xl px-6 lg:max-w-7xl">
-                <main
-                    class="my-6 grid gap-4 rounded-lg bg-white p-6 shadow-[0px_14px_34px_0px_rgba(0,0,0,0.08)] ring-1 ring-white/[0.05] transition duration-300 hover:text-black/70 hover:ring-black/20 focus:outline-none focus-visible:ring-[#FF2D20] dark:bg-zinc-900 dark:ring-zinc-800 dark:hover:text-white/70 dark:hover:ring-zinc-700 dark:focus-visible:ring-[#FF2D20]">
-                    <form @submit.prevent="submit">
-                        <div class="text-black/50 ">
-                            <InputLabel for="url" value="Paste your URL"/>
+    <div
+        class="relative min-h-screen flex flex-col items-center justify-center"
+    >
+        <div class="relative w-full max-w-3xl px-6 lg:max-w-7xl">
+            <main
+                class="my-6 grid gap-4 rounded-lg bg-white p-6 shadow-[0px_14px_34px_0px_rgba(0,0,0,0.08)] ring-1 ring-white/[0.05] transition duration-300 hover:text-black/70 hover:ring-black/20 focus:outline-none focus-visible:ring-[#FF2D20] dark:bg-zinc-900 dark:ring-zinc-800 dark:hover:text-white/70 dark:hover:ring-zinc-700 dark:focus-visible:ring-[#FF2D20]">
+                <form @submit.prevent="submit">
+                    <div class="text-black/50 ">
+                        <InputLabel for="url" value="Paste your URL"/>
 
-                            <div class="flex flex-col md:flex-row flex-wrap gap-4 mt-4">
-                                <TextInput
-                                    id="url"
-                                    v-model="form.urlToShort"
-                                    autocomplete="off"
-                                    autofocus
-                                    class="block flex-1"
-                                    required
-                                />
+                        <div class="flex flex-col md:flex-row flex-wrap gap-4 mt-4">
+                            <TextInput
+                                id="url"
+                                v-model="form.urlToShort"
+                                autocomplete="off"
+                                autofocus
+                                class="block flex-1"
+                                required
+                            />
 
-                                <PrimaryButton
-                                    :class="{ 'opacity-25': form.processing }"
-                                    :disabled="form.processing"
-                                    class="text-nowrap w-full justify-center md:w-fit">
-                                    Get your short url
-                                </PrimaryButton>
-                            </div>
-
-                            <InputError :message="form.errors.urlToShort" class="mt-2"/>
+                            <PrimaryButton
+                                :class="{ 'opacity-25': form.processing }"
+                                :disabled="form.processing"
+                                class="text-nowrap w-full justify-center md:w-fit">
+                                Get your short url
+                            </PrimaryButton>
                         </div>
-                    </form>
 
-                    <ShortLink
-                        v-if="props.shortUrl"
-                        :key="props.shortUrl"
-                        :content="props.shortUrl"
-                        :is-being-copied="linksBeingCopiedById[props.shortUrl]"
-                        @click="() => onShortLinkCopyButtonPressed(props.shortUrl, props.shortUrl)"
-                    />
+                        <InputError :message="form.errors.urlToShort" class="mt-2"/>
+                    </div>
+                </form>
 
-                    <template v-if="shortLinksHistory.length > 1">
-                        <hr class="border-zinc-700 my-2">
-                        <p>Recent</p>
-                    </template>
+                <ShortLink
+                    v-if="props.shortUrl"
+                    :key="props.shortUrl"
+                    :content="props.shortUrl"
+                    :is-being-copied="linksBeingCopiedById[props.shortUrl]"
+                    @click="() => onShortLinkCopyButtonPressed(props.shortUrl, props.shortUrl)"
+                />
 
-                    <ShortLink
-                        v-for="(shortLink, index) in shortLinksHistory.slice(0, shortLinksHistory.length - 1).reverse()"
-                        :key="`${shortLink.shortUrl}${index}`"
-                        :content="`${shortLink.url} | ${shortLink.shortUrl}`"
-                        :is-being-copied="linksBeingCopiedById[`${shortLink.shortUrl}${index}`]"
-                        @click="() => onShortLinkCopyButtonPressed(`${shortLink.shortUrl}${index}`, shortLink.shortUrl)"
-                    />
-                </main>
-            </div>
+                <template v-if="shortLinksHistory.length > 1">
+                    <hr class="border-zinc-700 my-2">
+                    <p>Recent</p>
+                </template>
+
+                <ShortLink
+                    v-for="(shortLink, index) in shortLinksHistory.slice(0, shortLinksHistory.length - 1).reverse()"
+                    :key="`${shortLink.shortUrl}${index}`"
+                    :content="`${shortLink.url} | ${shortLink.shortUrl}`"
+                    :is-being-copied="linksBeingCopiedById[`${shortLink.shortUrl}${index}`]"
+                    @click="() => onShortLinkCopyButtonPressed(`${shortLink.shortUrl}${index}`, shortLink.shortUrl)"
+                />
+            </main>
         </div>
     </div>
 </template>
